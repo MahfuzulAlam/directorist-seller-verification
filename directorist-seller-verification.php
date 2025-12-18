@@ -21,104 +21,128 @@
 /* This is an extension for Directorist plugin. It adds seller verification functionality to help build trust with verified sellers.*/
 
 /**
- * If this file is called directly, abrot!!!
+ * If this file is called directly, abort!
  */
-if (!defined('ABSPATH')) {
-    exit;                      // Exit if accessed
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 
-if (!class_exists('Directorist_Seller_Verification')) {
+if ( ! class_exists( 'Directorist_Seller_Verification' ) ) {
 
-    final class Directorist_Seller_Verification
-    {
-        /**
-         * Instance
-         */
-        private static $instance;
+	/**
+	 * Main plugin class.
+	 *
+	 * @package Directorist_Seller_Verification
+	 */
+	final class Directorist_Seller_Verification {
 
-        /**
-         * Instance
-         */
-        public static function instance()
-        {
-            if (!isset(self::$instance) && !(self::$instance instanceof Directorist_Seller_Verification)) {
-                self::$instance = new Directorist_Seller_Verification;
-                self::$instance->init();
-            }
-            return self::$instance;
-        }
+		/**
+		 * Plugin instance.
+		 *
+		 * @var Directorist_Seller_Verification
+		 */
+		private static $instance;
 
-        /**
-         * Init
-         */
-        public function init()
-        {
-            $this->define_constant();
-            $this->includes();
-            $this->enqueues();
-            $this->hooks();
-        }
+		/**
+		 * Get plugin instance.
+		 *
+		 * @return Directorist_Seller_Verification
+		 */
+		public static function instance() {
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Directorist_Seller_Verification ) ) {
+				self::$instance = new Directorist_Seller_Verification();
+				self::$instance->init();
+			}
+			return self::$instance;
+		}
 
-        /**
-         * Define
-         */
-        public function define_constant()
-        {
-            if ( !defined( 'DIRECTORIST_SELLER_VERIFICATION_URI' ) ) {
-                define( 'DIRECTORIST_SELLER_VERIFICATION_URI', plugin_dir_url( __FILE__ ) );
-            }
+		/**
+		 * Initialize plugin.
+		 *
+		 * @return void
+		 */
+		public function init() {
+			$this->define_constants();
+			$this->includes();
+			$this->enqueues();
+			$this->hooks();
+		}
 
-            if ( !defined( 'DIRECTORIST_SELLER_VERIFICATION_DIR' ) ) {
-                define( 'DIRECTORIST_SELLER_VERIFICATION_DIR', plugin_dir_path( __FILE__ ) );
-            }
-        }
+		/**
+		 * Define plugin constants.
+		 *
+		 * @return void
+		 */
+		private function define_constants() {
+			if ( ! defined( 'DIRECTORIST_SELLER_VERIFICATION_URI' ) ) {
+				define( 'DIRECTORIST_SELLER_VERIFICATION_URI', plugin_dir_url( __FILE__ ) );
+			}
 
-        /**
-         * Included Files
-         */
-        public function includes()
-        {
-            include_once(DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/functions.php');
-            include_once(DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/class-admin.php');
-            include_once(DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/class-dashboard.php');
-        }
+			if ( ! defined( 'DIRECTORIST_SELLER_VERIFICATION_DIR' ) ) {
+				define( 'DIRECTORIST_SELLER_VERIFICATION_DIR', plugin_dir_path( __FILE__ ) );
+			}
+		}
 
-        /**
-         * Enqueues
-         */
-        public function enqueues()
-        {
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-        }
+		/**
+		 * Include required files.
+		 *
+		 * @return void
+		 */
+		private function includes() {
+			include_once DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/functions.php';
+			include_once DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/class-admin.php';
+			include_once DIRECTORIST_SELLER_VERIFICATION_DIR . '/inc/class-dashboard.php';
+		}
 
-        /**
-         * Hooks
-         */
-        public function hooks()
-        {
-            add_filter('directorist_template', array($this, 'directorist_template'), 10, 2);
-        }
+		/**
+		 * Register enqueue hooks.
+		 *
+		 * @return void
+		 */
+		private function enqueues() {
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		}
 
-        /**
-         *  Enqueue JS file
-         */
-        public function enqueue_scripts()
-        {
-            // Replace 'your-plugin-name' with the actual name of your plugin's folder.
-            wp_enqueue_script('directorist-seller-verification-script', DIRECTORIST_SELLER_VERIFICATION_URI . 'assets/js/main.js', array('jquery'), '2.0', true);
-        }
+		/**
+		 * Register action and filter hooks.
+		 *
+		 * @return void
+		 */
+		private function hooks() {
+			add_filter( 'directorist_template', array( $this, 'directorist_template' ), 10, 2 );
+		}
 
-        /**
-         *  Enqueue CSS file
-         */
-        public function enqueue_styles()
-        {
-            // Replace 'your-plugin-name' with the actual name of your plugin's folder.
-            wp_enqueue_style('directorist-seller-verification-style', DIRECTORIST_SELLER_VERIFICATION_URI . 'assets/css/dashboard.css', array(), '2.0');
-        }
+		/**
+		 * Enqueue JavaScript files.
+		 *
+		 * @return void
+		 */
+		public function enqueue_scripts() {
+			wp_enqueue_script(
+				'directorist-seller-verification-script',
+				DIRECTORIST_SELLER_VERIFICATION_URI . 'assets/js/main.js',
+				array( 'jquery' ),
+				'2.0.0',
+				true
+			);
+		}
 
-        /**
+		/**
+		 * Enqueue CSS files.
+		 *
+		 * @return void
+		 */
+		public function enqueue_styles() {
+			wp_enqueue_style(
+				'directorist-seller-verification-style',
+				DIRECTORIST_SELLER_VERIFICATION_URI . 'assets/css/dashboard.css',
+				array(),
+				'2.0.0'
+			);
+		}
+
+/**
          * Template Exists
          */
         public function template_exists($template_file)
@@ -159,40 +183,51 @@ if (!class_exists('Directorist_Seller_Verification')) {
             if ($this->template_exists($template)) $template = $this->get_template($template, $field_data);
             return $template;
         }
-    }
+	}
 
-    if (!function_exists('directorist_is_plugin_active')) {
-        function directorist_is_plugin_active($plugin)
-        {
-            return in_array($plugin, (array) get_option('active_plugins', array()), true) || directorist_is_plugin_active_for_network($plugin);
-        }
-    }
+	/**
+	 * Check if Directorist plugin is active.
+	 *
+	 * @param string $plugin Plugin basename.
+	 * @return bool
+	 */
+	if ( ! function_exists( 'directorist_sv_is_plugin_active' ) ) {
+		function directorist_sv_is_plugin_active( $plugin ) {
+			if ( function_exists( 'directorist_is_plugin_active' ) ) {
+				return directorist_is_plugin_active( $plugin );
+			}
+			return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) || directorist_sv_is_plugin_active_for_network( $plugin );
+		}
+	}
 
-    if (!function_exists('directorist_is_plugin_active_for_network')) {
-        function directorist_is_plugin_active_for_network($plugin)
-        {
-            if (!is_multisite()) {
-                return false;
-            }
+	/**
+	 * Check if plugin is active for network (multisite).
+	 *
+	 * @param string $plugin Plugin basename.
+	 * @return bool
+	 */
+	if ( ! function_exists( 'directorist_sv_is_plugin_active_for_network' ) ) {
+		function directorist_sv_is_plugin_active_for_network( $plugin ) {
+			if ( ! is_multisite() ) {
+				return false;
+			}
 
-            $plugins = get_site_option('active_sitewide_plugins');
-            if (isset($plugins[$plugin])) {
-                return true;
-            }
+			$plugins = get_site_option( 'active_sitewide_plugins' );
+			return isset( $plugins[ $plugin ] );
+		}
+	}
 
-            return false;
-        }
-    }
+	/**
+	 * Get plugin instance.
+	 *
+	 * @return Directorist_Seller_Verification
+	 */
+	function directorist_seller_verification() {
+		return Directorist_Seller_Verification::instance();
+	}
 
-    function Directorist_Seller_Verification()
-    {
-        return Directorist_Seller_Verification::instance();
-    }
-
-    if (directorist_is_plugin_active('directorist/directorist-base.php')) {
-        Directorist_Seller_Verification(); // get the plugin running
-    }
+	// Initialize plugin if Directorist is active.
+	if ( directorist_sv_is_plugin_active( 'directorist/directorist-base.php' ) ) {
+		directorist_seller_verification();
+	}
 }
-
-
-?>

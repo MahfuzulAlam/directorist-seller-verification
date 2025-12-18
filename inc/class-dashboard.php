@@ -197,8 +197,30 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Dashboard' ) ) {
 				}
 
 				if ( $attachment_id > 0 ) {
-                    update_user_meta( $user_id, $meta_key, $attachment_id );
+					$attachment = get_post( $attachment_id );
+
+					// Verify attachment exists, is valid type, and user has permission.
+					if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
+						$attachment_id = 0;
+					} elseif ( ! current_user_can( 'edit_post', $attachment_id ) ) {
+						$attachment_id = 0;
+					} else {
+						$file_url = wp_get_attachment_url( $attachment_id );
+						if ( $file_url ) {
+							$file_type    = wp_check_filetype( $file_url );
+							$allowed_exts = array( 'jpg', 'jpeg', 'png', 'gif', 'pdf' );
+							$ext          = isset( $file_type['ext'] ) ? strtolower( $file_type['ext'] ) : '';
+
+							if ( ! in_array( $ext, $allowed_exts, true ) ) {
+								$attachment_id = 0;
+							}
+						} else {
+							$attachment_id = 0;
+						}
+					}
 				}
+
+				update_user_meta( $user_id, $meta_key, $attachment_id );
 			}
 
 			wp_send_json_success(

@@ -46,13 +46,13 @@
 
 				// Show preview
 				if (attachmentType === 'image') {
-					previewDiv.html('<img src="' + attachmentUrl + '" style="max-width: 300px; margin-top: 10px; display: block;" />');
+					previewDiv.html('<img class="directorist-sv-preview-image" src="' + attachmentUrl + '" alt="" />');
 				} else {
-					previewDiv.html('<p style="margin-top: 10px;"><a href="' + attachmentUrl + '" target="_blank">View Document</a></p>');
+					previewDiv.html('<p class="directorist-sv-preview-link"><a href="' + attachmentUrl + '" target="_blank" rel="noopener noreferrer">View Document</a></p>');
 				}
 
-				previewDiv.show();
-				removeButton.show();
+				previewDiv.removeClass('directorist-sv-hidden');
+				removeButton.removeClass('directorist-sv-hidden');
 			});
 
 			// Open the uploader
@@ -70,8 +70,8 @@
 
 			// Clear the field
 			fieldInput.val('');
-			previewDiv.html('').hide();
-			button.hide();
+			previewDiv.html('').addClass('directorist-sv-hidden');
+			button.addClass('directorist-sv-hidden');
 		});
 	});
 

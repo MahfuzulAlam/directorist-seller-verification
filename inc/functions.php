@@ -35,7 +35,7 @@ if ( ! function_exists( 'directorist_seller_verification_render_document_preview
 					if ( in_array( $ext, array( 'jpg', 'jpeg', 'png', 'gif' ), true ) ) {
 						?>
 						<div class="directorist-seller-document-preview">
-							<img src="<?php echo esc_url( $file_url ); ?>" alt="<?php echo esc_attr( $label ); ?>" style="max-width: 320px; height: auto;" />
+							<img class="directorist-sv-preview-image" src="<?php echo esc_url( $file_url ); ?>" alt="<?php echo esc_attr( $label ); ?>" />
 						</div>
 						<?php
 					} else {
@@ -63,10 +63,23 @@ if ( ! function_exists( 'directorist_seller_verification_render_document_preview
 	}
 }
 
-function allow_subscriber_uploads() {
-    $subscriber = get_role('subscriber');
-    if ($subscriber) {
-        $subscriber->add_cap('upload_files');
-    }
+/**
+ * Allow subscribers to upload files for seller verification.
+ *
+ * Note: This is a security consideration. Only enable if you trust your subscribers.
+ * Consider using a custom capability or role instead.
+ *
+ * @return void
+ */
+function directorist_sv_allow_subscriber_uploads() {
+	// Only allow if explicitly enabled via filter.
+	if ( ! apply_filters( 'directorist_sv_allow_subscriber_uploads', false ) ) {
+		return;
+	}
+
+	$subscriber = get_role( 'subscriber' );
+	if ( $subscriber ) {
+		$subscriber->add_cap( 'upload_files' );
+	}
 }
-add_action('init', 'allow_subscriber_uploads');
+add_action( 'init', 'directorist_sv_allow_subscriber_uploads' );

@@ -146,19 +146,20 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 							<button type="button" class="button directorist-upload-button" data-field="seller_document_front">
 								<?php esc_html_e( 'Upload Document', 'directorist-seller-verification' ); ?>
 							</button>
-							<button type="button" class="button directorist-remove-button" data-field="seller_document_front" style="<?php echo empty( $document_front ) ? 'display:none;' : ''; ?>">
+							<button type="button" class="button directorist-remove-button<?php echo empty( $document_front ) ? ' directorist-sv-hidden' : ''; ?>" data-field="seller_document_front">
 								<?php esc_html_e( 'Remove', 'directorist-seller-verification' ); ?>
 							</button>
-							<div class="directorist-upload-preview" id="seller_document_front_preview" style="<?php echo empty( $document_front ) ? 'display:none;' : ''; ?>">
+							<div class="directorist-upload-preview<?php echo empty( $document_front ) ? ' directorist-sv-hidden' : ''; ?>" id="seller_document_front_preview">
 								<?php
 								if ( ! empty( $document_front ) ) {
 									$front_url = wp_get_attachment_url( $document_front );
 									if ( $front_url ) {
 										$file_type = wp_check_filetype( $front_url );
-										if ( in_array( $file_type['ext'], array( 'jpg', 'jpeg', 'png', 'gif' ), true ) ) {
-											echo '<img src="' . esc_url( $front_url ) . '" style="max-width: 300px; margin-top: 10px; display: block;" />';
+										$ext       = isset( $file_type['ext'] ) ? strtolower( $file_type['ext'] ) : '';
+										if ( in_array( $ext, array( 'jpg', 'jpeg', 'png', 'gif' ), true ) ) {
+											echo '<img class="directorist-sv-preview-image" src="' . esc_url( $front_url ) . '" alt="" />';
 										} else {
-											echo '<p style="margin-top: 10px;"><a href="' . esc_url( $front_url ) . '" target="_blank">' . esc_html__( 'View Document', 'directorist-seller-verification' ) . '</a></p>';
+											echo '<p class="directorist-sv-preview-link"><a href="' . esc_url( $front_url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View Document', 'directorist-seller-verification' ) . '</a></p>';
 										}
 									}
 								}
@@ -169,7 +170,7 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 							</p>
 						</div>
 
-						<div class="directorist-seller-verification-upload" style="margin-top: 20px;">
+						<div class="directorist-seller-verification-upload directorist-sv-upload-block--back">
 							<label for="seller_document_back">
 								<?php esc_html_e( 'Back side', 'directorist-seller-verification' ); ?>
 							</label>
@@ -178,19 +179,20 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 							<button type="button" class="button directorist-upload-button" data-field="seller_document_back">
 								<?php esc_html_e( 'Upload Document', 'directorist-seller-verification' ); ?>
 							</button>
-							<button type="button" class="button directorist-remove-button" data-field="seller_document_back" style="<?php echo empty( $document_back ) ? 'display:none;' : ''; ?>">
+							<button type="button" class="button directorist-remove-button<?php echo empty( $document_back ) ? ' directorist-sv-hidden' : ''; ?>" data-field="seller_document_back">
 								<?php esc_html_e( 'Remove', 'directorist-seller-verification' ); ?>
 							</button>
-							<div class="directorist-upload-preview" id="seller_document_back_preview" style="<?php echo empty( $document_back ) ? 'display:none;' : ''; ?>">
+							<div class="directorist-upload-preview<?php echo empty( $document_back ) ? ' directorist-sv-hidden' : ''; ?>" id="seller_document_back_preview">
 								<?php
 								if ( ! empty( $document_back ) ) {
 									$back_url = wp_get_attachment_url( $document_back );
 									if ( $back_url ) {
 										$file_type = wp_check_filetype( $back_url );
-										if ( in_array( $file_type['ext'], array( 'jpg', 'jpeg', 'png', 'gif' ), true ) ) {
-											echo '<img src="' . esc_url( $back_url ) . '" style="max-width: 300px; margin-top: 10px; display: block;" />';
+										$ext       = isset( $file_type['ext'] ) ? strtolower( $file_type['ext'] ) : '';
+										if ( in_array( $ext, array( 'jpg', 'jpeg', 'png', 'gif' ), true ) ) {
+											echo '<img class="directorist-sv-preview-image" src="' . esc_url( $back_url ) . '" alt="" />';
 										} else {
-											echo '<p style="margin-top: 10px;"><a href="' . esc_url( $back_url ) . '" target="_blank">' . esc_html__( 'View Document', 'directorist-seller-verification' ) . '</a></p>';
+											echo '<p class="directorist-sv-preview-link"><a href="' . esc_url( $back_url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View Document', 'directorist-seller-verification' ) . '</a></p>';
 										}
 									}
 								}
@@ -272,15 +274,20 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 
 						if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
 							$attachment_id = 0;
+						} elseif ( ! current_user_can( 'edit_post', $attachment_id ) ) {
+							$attachment_id = 0;
 						} else {
 							$file_url = wp_get_attachment_url( $attachment_id );
 							if ( $file_url ) {
-								$file_type = wp_check_filetype( $file_url );
+								$file_type    = wp_check_filetype( $file_url );
 								$allowed_exts = array( 'jpg', 'jpeg', 'png', 'gif', 'pdf' );
+								$ext          = isset( $file_type['ext'] ) ? strtolower( $file_type['ext'] ) : '';
 
-								if ( ! in_array( strtolower( $file_type['ext'] ), $allowed_exts, true ) ) {
+								if ( ! in_array( $ext, $allowed_exts, true ) ) {
 									$attachment_id = 0;
 								}
+							} else {
+								$attachment_id = 0;
 							}
 						}
 					}
