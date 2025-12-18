@@ -124,3 +124,35 @@
 .directorist-seller-verification-documents .directorist-sv-status-block {
 	margin-top: 15px;
 }
+
+.directorist-sv-verified-badge{
+
+}
+
+.directorist-sv-verified-badge-name{
+	color: #ffffff;
+	background-color: #146e46;
+	padding: 2px 5px;
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: 600;
+	margin-left: 5px;
+}
+
+.directorist-thumb-listing-author i,
+.map-listing-card-single__author i{
+	position: absolute;
+    bottom: 0;
+    right: 0;
+	padding: 2px;
+	cursor: pointer;
+	background-color: #146e46;
+	border-radius: 50%;
+}
+
+.directorist-thumb-listing-author i::after,
+.map-listing-card-single__author i::after{
+	background-color: #ffffff;
+	height:10px;
+	width: 10px;
+}

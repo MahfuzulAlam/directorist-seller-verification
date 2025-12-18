@@ -65,11 +65,14 @@
 		var $remove = $('.directorist-sv-remove[data-field="' + fieldName + '"]');
 
 		var frame = wp.media({
-			title: getI18n().title,
-			button: { text: getI18n().button_text },
-			multiple: false,
-			library: { type: ['image', 'application/pdf'] },
-		});
+            title: getI18n().title,
+            button: { text: getI18n().button_text },
+            multiple: false,
+            library: { 
+                type: ['image', 'application/pdf'],
+                author: wp.media.view.settings.post.authorId // Only show current user's uploads
+            },
+        });
 
 		frame.on('select', function () {
 			var attachment = frame.state().get('selection').first().toJSON();

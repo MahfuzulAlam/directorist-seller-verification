@@ -59,7 +59,7 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Dashboard' ) ) {
 		protected static function get_documents_tab_content() {
 			ob_start();
 
-			$file = trailingslashit( DIRECTORIST_SELLER_VERIFICATION_DIR ) . 'tempates/tab-documents.php';
+			$file = trailingslashit( DIRECTORIST_SELLER_VERIFICATION_DIR ) . 'templates/tab-documents.php';
 
 			if ( file_exists( $file ) ) {
 				// Make sure we are in a safe scope.
