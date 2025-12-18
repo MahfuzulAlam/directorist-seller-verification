@@ -1,0 +1,261 @@
+/**
+ * Admin panel styles for Directorist - Seller Verification.
+ *
+ * @package Directorist_Seller_Verification
+ */
+
+/* Seller Verification Section Container */
+h2 + table.form-table[role="presentation"] {
+	margin-top: 15px;
+}
+
+/* Seller Verification Section Wrapper */
+.directorist-seller-verification-admin-section {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Section Header */
+/* .directorist-seller-verification-admin-section h2 {
+	border-bottom: 2px solid #2271b1;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	margin-top: 0;
+	font-size: 1.3em;
+	color: #1d2327;
+} */
+
+/* Form Table Styling */
+.form-table .directorist-seller-verification-section {
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 15px;
+	margin-top: 10px;
+}
+
+/* Document Type Select */
+#seller_document_type {
+	min-width: 300px;
+	padding: 6px 8px;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	background: #fff;
+	font-size: 14px;
+	line-height: 2;
+	color: #2c3338;
+}
+
+#seller_document_type:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: 2px solid transparent;
+}
+
+/* Upload Blocks Container */
+.directorist-seller-verification-upload {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 15px;
+	margin-bottom: 15px;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.directorist-seller-verification-upload:hover {
+	border-color: #8c8f94;
+}
+
+.directorist-seller-verification-upload label {
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 8px;
+	display: block;
+}
+
+.directorist-seller-verification-upload .directorist-sv-upload-block--back {
+	margin-top: 20px;
+}
+
+/* Buttons */
+.directorist-upload-button,
+.directorist-remove-button {
+	margin-right: 8px;
+	margin-top: 8px;
+	padding: 6px 12px;
+	font-size: 13px;
+	line-height: 2.15384615;
+	min-height: 30px;
+	border-radius: 3px;
+	transition: all 0.2s ease;
+}
+
+.directorist-upload-button {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+
+.directorist-upload-button:hover {
+	background: #135e96;
+	border-color: #135e96;
+	color: #fff;
+}
+
+.directorist-remove-button {
+	background: #d63638;
+	border-color: #d63638;
+	color: #fff;
+}
+
+.directorist-remove-button:hover {
+	background: #b32d2e;
+	border-color: #b32d2e;
+	color: #fff;
+}
+
+.directorist-remove-button.directorist-sv-hidden {
+	display: none !important;
+}
+
+/* Preview Container */
+.directorist-upload-preview {
+	margin-top: 12px;
+	padding: 10px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	min-height: 50px;
+}
+
+.directorist-upload-preview.directorist-sv-hidden {
+	display: none !important;
+}
+
+.directorist-upload-preview .directorist-sv-preview-image {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	display: block;
+	margin: 0 auto;
+}
+
+.directorist-upload-preview .directorist-sv-preview-link {
+	margin: 0;
+}
+
+.directorist-upload-preview .directorist-sv-preview-link a {
+	color: #2271b1;
+	text-decoration: none;
+	font-weight: 500;
+	padding: 8px 12px;
+	display: inline-block;
+	background: #fff;
+	border: 1px solid #2271b1;
+	border-radius: 3px;
+	transition: all 0.2s ease;
+}
+
+.directorist-upload-preview .directorist-sv-preview-link a:hover {
+	background: #2271b1;
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Description Text */
+.directorist-seller-verification-upload .description {
+	margin-top: 8px;
+	margin-bottom: 0;
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+/* Verification Checkbox */
+#verify_seller {
+	margin-right: 8px;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+}
+
+#verify_seller + label {
+	cursor: pointer;
+	font-weight: 500;
+	color: #1d2327;
+}
+
+#verify_seller:checked {
+	accent-color: #2271b1;
+}
+
+/* Status Indicator */
+.directorist-sv-verification-status {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+	margin-left: 10px;
+}
+
+.directorist-sv-verification-status--verified {
+	background: #00a32a;
+	color: #fff;
+}
+
+.directorist-sv-verification-status--pending {
+	background: #f0b849;
+	color: #1d2327;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+	.directorist-seller-verification-upload {
+		padding: 12px;
+	}
+
+	.directorist-upload-button,
+	.directorist-remove-button {
+		display: block;
+		width: 100%;
+		margin-right: 0;
+		margin-bottom: 8px;
+	}
+
+	.directorist-upload-preview .directorist-sv-preview-image {
+		max-width: 100%;
+	}
+}
+
+/* Loading State */
+.directorist-sv-uploading {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.directorist-sv-uploading::after {
+	content: '';
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-left: 8px;
+	border: 2px solid #fff;
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: directorist-sv-spin 0.6s linear infinite;
+	vertical-align: middle;
+}
+
+@keyframes directorist-sv-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+

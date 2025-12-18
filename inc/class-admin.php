@@ -55,6 +55,13 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 				'1.0.0',
 				true
 			);
+
+			wp_enqueue_style(
+				'directorist-seller-verification-admin',
+				DIRECTORIST_SELLER_VERIFICATION_URI . 'assets/css/admin.css',
+				array(),
+				'1.0.0'
+			);
 		}
 
 		/**
@@ -218,7 +225,8 @@ if ( ! class_exists( 'Directorist_Seller_Verification_Admin' ) ) {
 						</p>
 					</td>
 				</tr>
-			</table>
+				</table>
+			</div>
 			<?php
 		}
 
